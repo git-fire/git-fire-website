@@ -92,12 +92,6 @@ function commandBlock(product: ProductId, os: OsFamily): { command: string; note
 	}
 }
 
-function releasesUrl(product: ProductId): string {
-	return product === 'git-fire'
-		? 'https://github.com/git-fire/git-fire/releases'
-		: 'https://github.com/git-fire/git-rain/releases';
-}
-
 function bindPicker(root: HTMLElement) {
 	const product = root.dataset.product as ProductId;
 	if (product !== 'git-fire' && product !== 'git-rain') return;
@@ -139,9 +133,6 @@ function bindPicker(root: HTMLElement) {
 			}, 1600);
 		}
 	});
-
-	const releases = root.querySelector<HTMLAnchorElement>('[data-install-releases]');
-	if (releases) releases.href = releasesUrl(product);
 
 	render();
 }

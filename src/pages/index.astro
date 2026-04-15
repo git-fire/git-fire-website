@@ -16,12 +16,12 @@ import InstallPicker from '../components/InstallPicker.astro';
 					One command to discover repos, optionally commit dirty work, and push safety rails across your
 					machine — then a companion CLI to pull it all back down with the same multi-repo discipline.
 				</p>
-				<p class="hero__lead hero__lead--b" hidden>
+				<p class="hero__lead hero__lead--b">
 					When you need a consistent move across many repositories, reach for git-fire. When you need
 					the reverse trip from remotes, git-rain keeps the same registry-aware, safety-first posture.
 				</p>
 				<div class="hero__grid">
-					<div class="card card--fire">
+					<div class="card card--fire" data-reveal data-reveal-delay="40">
 						<h2><a href="https://github.com/git-fire/git-fire">git-fire</a></h2>
 						<p>
 							Multi-repo checkpoint: discover, auto-commit optional, push backup branches with dry-run
@@ -32,7 +32,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 							<a class="btn btn--secondary" href="#install">Install</a>
 						</div>
 					</div>
-					<div class="card card--rain">
+					<div class="card card--rain" data-reveal data-reveal-delay="90">
 						<h2><a href="https://github.com/git-fire/git-rain">git-rain</a></h2>
 						<p>
 							Reverse sync: fetch and fast-forward where safe, skip risky rewrites by default, optional
@@ -48,7 +48,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 		<section class="section" id="git-fire" aria-labelledby="heading-fire">
-			<div class="wrap">
+			<div class="wrap" data-reveal>
 				<h2 id="heading-fire">git-fire</h2>
 				<p class="section__lead">
 					Emergency or everyday: one entrypoint for multi-repository checkpoints with dry-run, registry
@@ -63,7 +63,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 		<section class="section" id="git-rain" aria-labelledby="heading-rain">
-			<div class="wrap">
+			<div class="wrap" data-reveal>
 				<h2 id="heading-rain">git-rain</h2>
 				<p class="section__lead">
 					Pulls the same mental model in the opposite direction: discover local repos, fetch from remotes,
@@ -79,7 +79,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 		<section class="section" id="testkit" aria-labelledby="heading-testkit">
-			<div class="wrap">
+			<div class="wrap" data-reveal>
 				<h2 id="heading-testkit">git-testkit</h2>
 				<p class="section__lead">
 					Go-first testing helpers for real Git repositories — fixtures, scenarios, snapshots — so CLIs
@@ -93,7 +93,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 		<section class="section" id="harness" aria-labelledby="heading-harness">
-			<div class="wrap">
+			<div class="wrap" data-reveal>
 				<h2 id="heading-harness">git-harness</h2>
 				<p class="section__lead">
 					Shared orchestration primitives extracted from git-fire: repository discovery helpers, git
@@ -108,7 +108,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 		<section class="section" id="install" aria-labelledby="heading-install">
-			<div class="wrap">
+			<div class="wrap" data-reveal>
 				<h2 id="heading-install">Install</h2>
 				<p class="section__lead">
 					Commands match the published READMEs. Pick your platform — we guess from your browser and remember
@@ -121,31 +121,6 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 	</main>
 
-	<script is:inline>
-		(function () {
-			var key = 'git-fire-site-hero-variant';
-			try {
-				var v = sessionStorage.getItem(key);
-				if (v !== 'a' && v !== 'b') {
-					v = Math.random() < 0.5 ? 'a' : 'b';
-					sessionStorage.setItem(key, v);
-				}
-				var a = document.querySelector('.hero__lead--a');
-				var b = document.querySelector('.hero__lead--b');
-				if (a && b) {
-					if (v === 'b') {
-						a.hidden = true;
-						b.hidden = false;
-					} else {
-						a.hidden = false;
-						b.hidden = true;
-					}
-				}
-			} catch (e) {
-				/* ignore */
-			}
-		})();
-	</script>
 	<script>
 		import { initInstallPickers } from '../scripts/install-pickers.ts';
 		initInstallPickers();

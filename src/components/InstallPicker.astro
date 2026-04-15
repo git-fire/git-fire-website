@@ -5,6 +5,11 @@ export interface Props {
 }
 
 const { product, title = 'Install' } = Astro.props;
+
+const releasesUrl =
+	product === 'git-fire'
+		? 'https://github.com/git-fire/git-fire/releases'
+		: 'https://github.com/git-fire/git-rain/releases';
 ---
 
 <div class="install-picker" data-install-picker data-product={product}>
@@ -22,7 +27,7 @@ const { product, title = 'Install' } = Astro.props;
 	</div>
 	<p class="install-picker__note" data-install-note></p>
 	<p class="install-picker__links">
-		<a data-install-releases href="#" target="_blank" rel="noopener noreferrer">GitHub Releases</a>
+		<a href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>
 		— checksums and binary archives
 	</p>
 </div>

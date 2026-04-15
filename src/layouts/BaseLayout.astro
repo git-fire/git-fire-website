@@ -21,6 +21,26 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<script is:inline>
+			(function () {
+				document.documentElement.dataset.heroVariant = 'a';
+				try {
+					var k = 'git-fire-site-hero-variant';
+					var v = sessionStorage.getItem(k);
+					if (v !== 'a' && v !== 'b') {
+						v = Math.random() < 0.5 ? 'a' : 'b';
+						sessionStorage.setItem(k, v);
+					}
+					document.documentElement.dataset.heroVariant = v;
+				} catch (e) {
+					/* private mode */
+				}
+				var h = typeof location !== 'undefined' ? location.hash : '';
+				if (!h || h === '#') {
+					if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+				}
+			})();
+		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{fullTitle}</title>
@@ -63,5 +83,22 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 				</p>
 			</div>
 		</footer>
+		<script is:inline>
+			(function () {
+				var h = location.hash;
+				if (!h || h === '#') {
+					window.scrollTo(0, 0);
+					requestAnimationFrame(function () {
+						window.scrollTo(0, 0);
+					});
+				}
+			})();
+		</script>
+		<script>
+			import { initRevealOnScroll } from '../scripts/reveal-on-scroll.ts';
+			import { initInPageNav } from '../scripts/in-page-nav.ts';
+			initRevealOnScroll();
+			initInPageNav();
+		</script>
 	</body>
 </html>
