@@ -25,22 +25,22 @@ import InstallPicker from '../components/InstallPicker.astro';
 						<h2><a href="https://github.com/git-fire/git-fire">git-fire</a></h2>
 						<p>
 							Multi-repo checkpoint: discover, auto-commit optional, push backup branches with dry-run
-							and auditable logs. Beta software — read the upstream README for current scope.
+							and auditable logs. Beta — see GitHub for scope.
 						</p>
+						<InstallPicker product="git-fire" embedded />
 						<div class="cta-row">
 							<a class="btn btn--primary" href="https://github.com/git-fire/git-fire">GitHub</a>
-							<a class="btn btn--secondary" href="#install">Install</a>
 						</div>
 					</div>
 					<div class="card card--rain" data-reveal data-reveal-delay="90">
 						<h2><a href="https://github.com/git-fire/git-rain">git-rain</a></h2>
 						<p>
 							Reverse sync: fetch and fast-forward where safe, skip risky rewrites by default, optional
-							TUI selection. Pairs with git-fire for outbound and inbound multi-repo workflows.
+							TUI selection. Companion to git-fire.
 						</p>
+						<InstallPicker product="git-rain" embedded />
 						<div class="cta-row">
 							<a class="btn btn--secondary" href="https://github.com/git-fire/git-rain">GitHub</a>
-							<a class="btn btn--secondary" href="#install">Install</a>
 						</div>
 					</div>
 				</div>
@@ -107,18 +107,6 @@ import InstallPicker from '../components/InstallPicker.astro';
 			</div>
 		</section>
 
-		<section class="section" id="install" aria-labelledby="heading-install">
-			<div class="wrap" data-reveal>
-				<h2 id="heading-install">Install</h2>
-				<p class="section__lead">
-					Commands match the published READMEs. Pick your platform — we guess from your browser and remember
-					your choice for this session. Always verify one-liners (especially <code>curl | bash</code>)
-					before you run them.
-				</p>
-				<InstallPicker product="git-fire" title="git-fire" />
-				<InstallPicker product="git-rain" title="git-rain" />
-			</div>
-		</section>
 	</main>
 
 	<script>

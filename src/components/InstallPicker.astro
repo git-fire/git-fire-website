@@ -2,20 +2,28 @@
 export interface Props {
 	product: 'git-fire' | 'git-rain';
 	title?: string;
+	/** Tighter block for hero cards: no heading, smaller chrome */
+	embedded?: boolean;
 }
 
-const { product, title = 'Install' } = Astro.props;
+const { product, title = 'Install', embedded = false } = Astro.props;
 
 const releasesUrl =
 	product === 'git-fire'
 		? 'https://github.com/git-fire/git-fire/releases'
 		: 'https://github.com/git-fire/git-rain/releases';
+
+const labelId = `platform-label-${product}`;
 ---
 
-<div class="install-picker" data-install-picker data-product={product}>
-	<p class="install-picker__title" style="font-weight: 600; margin-bottom: 0.75rem;">{title}</p>
-	<label for={`platform-${product}`}>Platform</label>
-	<select id={`platform-${product}`} data-install-select>
+<div
+	class:list={['install-picker', embedded && 'install-picker--embedded']}
+	data-install-picker
+	data-product={product}
+>
+	{!embedded && <p class="install-picker__title">{title}</p>}
+	<label id={labelId} for={`platform-${product}`}>{embedded ? 'Install' : 'Platform'}</label>
+	<select id={`platform-${product}`} data-install-select aria-labelledby={labelId}>
 		<option value="macos">macOS — Homebrew</option>
 		<option value="windows">Windows — winget</option>
 		<option value="linux">Linux</option>

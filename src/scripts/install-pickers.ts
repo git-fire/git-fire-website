@@ -92,34 +92,50 @@ function commandBlock(product: ProductId, os: OsFamily): { command: string; note
 	}
 }
 
-function bindPicker(root: HTMLElement) {
+function renderPicker(root: HTMLElement) {
 	const product = root.dataset.product as ProductId;
 	if (product !== 'git-fire' && product !== 'git-rain') return;
 
 	const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
 	const pre = root.querySelector<HTMLElement>('[data-install-command]');
 	const noteEl = root.querySelector<HTMLElement>('[data-install-note]');
+	if (!select || !pre || !noteEl) return;
+
+	const os = select.value as OsFamily;
+	const { command, note } = commandBlock(product, os);
+	pre.textContent = command;
+	noteEl.textContent = note;
+}
+
+function setPlatformEverywhere(os: OsFamily) {
+	persistOs(os);
+	document.querySelectorAll<HTMLElement>('[data-install-picker]').forEach((root) => {
+		const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
+		if (select) select.value = os;
+		renderPicker(root);
+	});
+}
+
+function bindPicker(root: HTMLElement) {
+	const product = root.dataset.product as ProductId;
+	if (product !== 'git-fire' && product !== 'git-rain') return;
+
+	const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
 	const copyBtn = root.querySelector<HTMLButtonElement>('[data-install-copy]');
 
-	if (!select || !pre || !noteEl || !copyBtn) return;
+	if (!select || !copyBtn) return;
 
 	const initial = storedOs() ?? detectOs();
 	select.value = initial;
-
-	function render() {
-		const os = select.value as OsFamily;
-		const { command, note } = commandBlock(product, os);
-		pre.textContent = command;
-		noteEl.textContent = note;
-	}
+	renderPicker(root);
 
 	select.addEventListener('change', () => {
-		persistOs(select.value as OsFamily);
-		render();
+		setPlatformEverywhere(select.value as OsFamily);
 	});
 
 	copyBtn.addEventListener('click', async () => {
-		const text = pre.textContent ?? '';
+		const pre = root.querySelector<HTMLElement>('[data-install-command]');
+		const text = pre?.textContent ?? '';
 		try {
 			await navigator.clipboard.writeText(text);
 			copyBtn.textContent = 'Copied';
@@ -133,8 +149,6 @@ function bindPicker(root: HTMLElement) {
 			}, 1600);
 		}
 	});
-
-	render();
 }
 
 export function initInstallPickers() {

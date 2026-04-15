@@ -306,6 +306,46 @@ a:hover {
 	margin-top: var(--space-lg);
 }
 
+.install-picker__title {
+	font-weight: 600;
+	margin-bottom: 0.75rem;
+}
+
+.install-picker--embedded {
+	margin-top: var(--space-md);
+	margin-bottom: var(--space-md);
+	padding: var(--space-md);
+	background: var(--color-bg);
+	border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-fire));
+}
+
+.card--rain .install-picker--embedded {
+	border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-rain));
+}
+
+.install-picker--embedded label {
+	margin-bottom: var(--space-xs);
+}
+
+.install-picker--embedded pre {
+	font-size: 0.75rem;
+	margin-bottom: var(--space-sm);
+	padding: var(--space-sm) var(--space-md);
+}
+
+.install-picker--embedded .install-picker__actions {
+	margin-bottom: var(--space-sm);
+}
+
+.install-picker--embedded .install-picker__note {
+	font-size: 0.75rem;
+	margin-bottom: var(--space-xs);
+}
+
+.install-picker--embedded .install-picker__links {
+	font-size: 0.8125rem;
+}
+
 .install-picker label {
 	display: block;
 	font-size: 0.8125rem;
