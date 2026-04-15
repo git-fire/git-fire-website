@@ -1,0 +1,28 @@
+---
+export interface Props {
+	product: 'git-fire' | 'git-rain';
+	title?: string;
+}
+
+const { product, title = 'Install' } = Astro.props;
+---
+
+<div class="install-picker" data-install-picker data-product={product}>
+	<p class="install-picker__title" style="font-weight: 600; margin-bottom: 0.75rem;">{title}</p>
+	<label for={`platform-${product}`}>Platform</label>
+	<select id={`platform-${product}`} data-install-select>
+		<option value="macos">macOS — Homebrew</option>
+		<option value="windows">Windows — winget</option>
+		<option value="linux">Linux</option>
+		<option value="go">Any — Go install</option>
+	</select>
+	<pre><code data-install-command></code></pre>
+	<div class="install-picker__actions">
+		<button type="button" data-install-copy>Copy</button>
+	</div>
+	<p class="install-picker__note" data-install-note></p>
+	<p class="install-picker__links">
+		<a data-install-releases href="#" target="_blank" rel="noopener noreferrer">GitHub Releases</a>
+		— checksums and binary archives
+	</p>
+</div>

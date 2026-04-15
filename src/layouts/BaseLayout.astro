@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+}
+
+const {
+	title,
+	description = 'git-fire checkpoints every repo; git-rain syncs them back down. Libraries: git-testkit and git-harness.',
+	ogImage = '/favicon.svg',
+} = Astro.props;
+
+const fullTitle = title === 'git-fire' ? title : `${title} · git-fire`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(ogImage, Astro.site)} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<header class="site-header">
+			<div class="wrap site-header__inner">
+				<a class="site-logo" href="/">git-fire</a>
+				<nav class="site-nav" aria-label="Page">
+					<a href="#git-fire">git-fire</a>
+					<a href="#git-rain">git-rain</a>
+					<a href="#testkit">git-testkit</a>
+					<a href="#harness">git-harness</a>
+					<a href="#install">Install</a>
+				</nav>
+			</div>
+		</header>
+		<slot />
+		<footer class="footer">
+			<div class="wrap">
+				<p>
+					Open source (MIT). Also on
+					<a href="https://git-fire.sh" rel="noopener noreferrer">git-fire.sh</a>
+					and
+					<a href="https://git-fire.dev" rel="noopener noreferrer">git-fire.dev</a>
+					— use <strong>git-fire.com</strong> as the canonical site for links and SEO.
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>
