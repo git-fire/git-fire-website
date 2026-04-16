@@ -14,6 +14,7 @@ const releasesUrl =
 		: 'https://github.com/git-fire/git-rain/releases';
 
 const labelId = `platform-label-${product}`;
+const platformGroupId = `platform-group-${product}`;
 ---
 
 <div
@@ -22,13 +23,38 @@ const labelId = `platform-label-${product}`;
 	data-product={product}
 >
 	{!embedded && <p class="install-picker__title">{title}</p>}
-	<label id={labelId} for={`platform-${product}`}>{embedded ? 'Install' : 'Platform'}</label>
-	<select id={`platform-${product}`} data-install-select aria-labelledby={labelId}>
-		<option value="macos">macOS — Homebrew</option>
-		<option value="windows">Windows — winget</option>
-		<option value="linux">Linux</option>
-		<option value="go">Any — Go install</option>
-	</select>
+	<p id={labelId} class="install-picker__label">{embedded ? 'Install' : 'Platform'}</p>
+	<div
+		id={platformGroupId}
+		class="install-picker__platforms"
+		role="radiogroup"
+		aria-labelledby={labelId}
+	>
+		<button
+			type="button"
+			role="radio"
+			aria-checked="false"
+			class="install-picker__platform-btn"
+			data-install-platform="macos">macOS</button>
+		<button
+			type="button"
+			role="radio"
+			aria-checked="false"
+			class="install-picker__platform-btn"
+			data-install-platform="windows">Windows</button>
+		<button
+			type="button"
+			role="radio"
+			aria-checked="false"
+			class="install-picker__platform-btn"
+			data-install-platform="linux">Linux</button>
+		<button
+			type="button"
+			role="radio"
+			aria-checked="false"
+			class="install-picker__platform-btn"
+			data-install-platform="go">Go</button>
+	</div>
 	<pre><code data-install-command></code></pre>
 	<div class="install-picker__actions">
 		<button type="button" data-install-copy>Copy</button>

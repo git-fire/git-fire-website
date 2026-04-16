@@ -445,7 +445,7 @@ a:hover {
 	border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-rain));
 }
 
-.install-picker--embedded label {
+.install-picker--embedded .install-picker__label {
 	margin-bottom: var(--space-xs);
 }
 
@@ -470,25 +470,53 @@ a:hover {
 	font-size: 0.8125rem;
 }
 
-.install-picker label {
+.install-picker__label {
 	display: block;
 	font-size: 0.8125rem;
 	font-weight: 600;
 	color: var(--color-muted);
-	margin-bottom: var(--space-sm);
+	margin: 0 0 var(--space-sm);
 }
 
-.install-picker select {
-	width: 100%;
-	max-width: 22rem;
-	padding: var(--space-sm) var(--space-md);
-	font: inherit;
-	font-size: 0.9375rem;
-	color: var(--color-text);
-	background: var(--color-bg);
-	border: 1px solid color-mix(in srgb, var(--color-border) 80%, var(--color-text));
-	border-radius: var(--radius-sm);
+.install-picker__platforms {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
 	margin-bottom: var(--space-md);
+	max-width: 22rem;
+}
+
+.install-picker__platform-btn {
+	font: inherit;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	padding: var(--space-xs) var(--space-sm);
+	border-radius: var(--radius-sm);
+	border: 1px solid color-mix(in srgb, var(--color-border) 85%, var(--color-text));
+	background: var(--color-bg);
+	color: var(--color-muted);
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.install-picker__platform-btn:hover {
+	color: var(--color-text);
+	border-color: color-mix(in srgb, var(--color-border) 55%, var(--color-text));
+}
+
+.install-picker[data-product='git-fire'] .install-picker__platform-btn--active {
+	color: var(--color-fire);
+	border-color: color-mix(in srgb, var(--color-fire) 45%, var(--color-border));
+	background: color-mix(in srgb, var(--color-fire) 12%, var(--color-bg));
+}
+
+.install-picker[data-product='git-rain'] .install-picker__platform-btn--active {
+	color: var(--color-rain);
+	border-color: color-mix(in srgb, var(--color-rain) 45%, var(--color-border));
+	background: color-mix(in srgb, var(--color-rain) 12%, var(--color-bg));
 }
 
 .install-picker pre {
@@ -513,7 +541,7 @@ a:hover {
 	margin-bottom: var(--space-md);
 }
 
-.install-picker button {
+.install-picker__actions button {
 	font: inherit;
 	font-size: 0.875rem;
 	font-weight: 600;
@@ -526,7 +554,7 @@ a:hover {
 	transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.install-picker button:hover {
+.install-picker__actions button:hover {
 	border-color: var(--color-rain-dim);
 	background: color-mix(in srgb, var(--color-rain) 12%, var(--color-surface));
 }

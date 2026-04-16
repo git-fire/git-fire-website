@@ -3,6 +3,13 @@ type OsFamily = 'macos' | 'windows' | 'linux' | 'go';
 
 const STORAGE_KEY = 'git-fire-site-install-os';
 
+const PLATFORM_ORDER: OsFamily[] = ['macos', 'windows', 'linux', 'go'];
+
+function coerceOs(value: string | undefined): OsFamily | null {
+	if (value === 'macos' || value === 'windows' || value === 'linux' || value === 'go') return value;
+	return null;
+}
+
 function detectOs(): OsFamily {
 	if (typeof navigator === 'undefined') return 'go';
 	const uaData = navigator.userAgentData;
@@ -92,16 +99,32 @@ function commandBlock(product: ProductId, os: OsFamily): { command: string; note
 	}
 }
 
+function selectedOs(root: HTMLElement): OsFamily {
+	const active = root.querySelector<HTMLButtonElement>(
+		'[data-install-platform][aria-checked="true"]',
+	);
+	return coerceOs(active?.dataset.installPlatform) ?? PLATFORM_ORDER[0];
+}
+
+function syncPlatformButtons(root: HTMLElement, os: OsFamily) {
+	root.querySelectorAll<HTMLButtonElement>('[data-install-platform]').forEach((btn) => {
+		const v = coerceOs(btn.dataset.installPlatform);
+		const isSelected = v === os;
+		btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+		btn.tabIndex = isSelected ? 0 : -1;
+		btn.classList.toggle('install-picker__platform-btn--active', isSelected);
+	});
+}
+
 function renderPicker(root: HTMLElement) {
 	const product = root.dataset.product as ProductId;
 	if (product !== 'git-fire' && product !== 'git-rain') return;
 
-	const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
 	const pre = root.querySelector<HTMLElement>('[data-install-command]');
 	const noteEl = root.querySelector<HTMLElement>('[data-install-note]');
-	if (!select || !pre || !noteEl) return;
+	if (!pre || !noteEl) return;
 
-	const os = select.value as OsFamily;
+	const os = selectedOs(root);
 	const { command, note } = commandBlock(product, os);
 	pre.textContent = command;
 	noteEl.textContent = note;
@@ -110,9 +133,67 @@ function renderPicker(root: HTMLElement) {
 function setPlatformEverywhere(os: OsFamily) {
 	persistOs(os);
 	document.querySelectorAll<HTMLElement>('[data-install-picker]').forEach((root) => {
-		const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
-		if (select) select.value = os;
+		syncPlatformButtons(root, os);
 		renderPicker(root);
+	});
+}
+
+function bindPlatformRadiogroup(root: HTMLElement) {
+	const group = root.querySelector<HTMLElement>('.install-picker__platforms');
+	const buttons = root.querySelectorAll<HTMLButtonElement>('[data-install-platform]');
+	if (!group || buttons.length === 0) return;
+
+	group.addEventListener('keydown', (event) => {
+		if (!(event.target instanceof HTMLButtonElement)) return;
+		if (!event.target.matches('[data-install-platform]')) return;
+
+		const current = coerceOs(event.target.dataset.installPlatform);
+		if (!current) return;
+
+		let next: OsFamily | null = null;
+
+		switch (event.key) {
+			case 'ArrowRight':
+			case 'ArrowDown': {
+				event.preventDefault();
+				const i = PLATFORM_ORDER.indexOf(current);
+				next = PLATFORM_ORDER[Math.min(i + 1, PLATFORM_ORDER.length - 1)];
+				break;
+			}
+			case 'ArrowLeft':
+			case 'ArrowUp': {
+				event.preventDefault();
+				const i = PLATFORM_ORDER.indexOf(current);
+				next = PLATFORM_ORDER[Math.max(i - 1, 0)];
+				break;
+			}
+			case 'Home': {
+				event.preventDefault();
+				next = PLATFORM_ORDER[0];
+				break;
+			}
+			case 'End': {
+				event.preventDefault();
+				next = PLATFORM_ORDER[PLATFORM_ORDER.length - 1];
+				break;
+			}
+			default:
+				return;
+		}
+
+		if (next) {
+			setPlatformEverywhere(next);
+			queueMicrotask(() => {
+				root.querySelector<HTMLButtonElement>(`[data-install-platform="${next}"]`)?.focus();
+			});
+		}
+	});
+
+	buttons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const os = coerceOs(btn.dataset.installPlatform);
+			if (os) setPlatformEverywhere(os);
+		});
 	});
 }
 
@@ -120,18 +201,15 @@ function bindPicker(root: HTMLElement) {
 	const product = root.dataset.product as ProductId;
 	if (product !== 'git-fire' && product !== 'git-rain') return;
 
-	const select = root.querySelector<HTMLSelectElement>('[data-install-select]');
 	const copyBtn = root.querySelector<HTMLButtonElement>('[data-install-copy]');
 
-	if (!select || !copyBtn) return;
+	if (!copyBtn) return;
 
 	const initial = storedOs() ?? detectOs();
-	select.value = initial;
+	syncPlatformButtons(root, initial);
 	renderPicker(root);
 
-	select.addEventListener('change', () => {
-		setPlatformEverywhere(select.value as OsFamily);
-	});
+	bindPlatformRadiogroup(root);
 
 	copyBtn.addEventListener('click', async () => {
 		const pre = root.querySelector<HTMLElement>('[data-install-command]');
