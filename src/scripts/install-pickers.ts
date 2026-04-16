@@ -117,7 +117,7 @@ function orderedLinuxMethodIds(product: ProductId): string[] {
 	if (product === 'git-fire') {
 		return orderPool(fam, ['script', 'deb', 'rpm', 'brew'] as const);
 	}
-	return orderPool(fam, ['deb', 'rpm', 'manual'] as const);
+	return orderPool(fam, ['deb', 'rpm', 'brew', 'manual'] as const);
 }
 
 function orderPool<T extends string>(fam: 'deb' | 'rpm' | 'unknown', neutralOrder: readonly T[]): T[] {
@@ -227,6 +227,13 @@ function fireLinuxBrew(): { command: string; note: string } {
 	};
 }
 
+function rainLinuxBrew(): { command: string; note: string } {
+	return {
+		command: 'brew tap git-fire/tap\nbrew install git-rain',
+		note: 'Homebrew on Linux (Linuxbrew). Same tap as macOS.',
+	};
+}
+
 function rainLinuxDeb(): { command: string; note: string } {
 	return {
 		command: 'sudo dpkg -i ./git-rain_<version>_amd64.deb',
@@ -303,6 +310,8 @@ function resolveCommand(product: ProductId, os: OsFamily, methodId: string): { c
 	switch (methodId) {
 		case 'rpm':
 			return rainLinuxRpm();
+		case 'brew':
+			return rainLinuxBrew();
 		case 'manual':
 			return rainLinuxManual();
 		case 'deb':
