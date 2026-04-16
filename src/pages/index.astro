@@ -12,9 +12,16 @@ const hostname = Astro.url.hostname;
 const hostLower = hostname.toLowerCase();
 const featuredParam = Astro.url.searchParams.get('featured');
 const layoutParam = Astro.url.searchParams.get('layout');
+const protoGate = Astro.url.searchParams.get('proto') === '1';
 
-/** Debug bar (Domain / Layout): hidden unless explicitly enabled with ?proto=1 */
-const showProtoSwitcher = Astro.url.searchParams.get('proto') === '1';
+/** Dev / preview, or production opt-in via ?proto=1 — hide on canonical marketing domains otherwise */
+const showProtoSwitcher =
+	import.meta.env.DEV ||
+	protoGate ||
+	hostLower === 'localhost' ||
+	hostLower.startsWith('127.') ||
+	hostLower.endsWith('.workers.dev') ||
+	hostLower.endsWith('.pages.dev');
 
 /** On git-rain hosts, hostname already picks rain — hide Domain row when bar is open */
 const showProtoDomainGroup = showProtoSwitcher && !hostLower.includes('git-rain');
@@ -36,10 +43,12 @@ const description = featured === 'rain'
 	: 'Multi-repo checkpoint with git-fire, reverse sync with git-rain, plus git-testkit and git-harness for serious Git automation and tests.';
 
 function protoUrl(f: string, l: string): string {
-	const parts: string[] = ['proto=1'];
-	if (f !== 'fire') parts.push(`featured=${f}`);
-	if (l !== 'current') parts.push(`layout=${l}`);
-	return `?${parts.join('&')}`;
+	const params = new URLSearchParams();
+	if (f !== 'fire') params.set('featured', f);
+	if (l !== 'current') params.set('layout', l);
+	if (protoGate) params.set('proto', '1');
+	const qs = params.toString();
+	return qs ? `?${qs}` : '?';
 }
 ---
 
