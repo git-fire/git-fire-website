@@ -115,8 +115,18 @@ a:hover {
 	align-items: center;
 }
 
-.site-logo--lockup:hover {
-	opacity: 0.88;
+[data-featured='fire'] .site-logo--lockup .brand-lockup__img {
+	filter: drop-shadow(0 2px 14px color-mix(in srgb, var(--color-fire) 42%, transparent))
+		drop-shadow(0 0 28px color-mix(in srgb, var(--color-fire) 18%, transparent));
+}
+
+[data-featured='rain'] .site-logo--lockup .brand-lockup__img {
+	filter: drop-shadow(0 2px 14px color-mix(in srgb, var(--color-rain) 42%, transparent))
+		drop-shadow(0 0 28px color-mix(in srgb, var(--color-rain) 18%, transparent));
+}
+
+.site-logo--lockup:hover .brand-lockup__img {
+	opacity: 0.94;
 }
 
 .site-logo:not(.site-logo--lockup):hover {
@@ -147,18 +157,18 @@ a:hover {
 }
 
 .brand-lockup--sm {
-	--brand-lockup-h: 1.5rem;
-	--brand-lockup-w: 10rem;
+	--brand-lockup-h: 1.875rem;
+	--brand-lockup-w: min(13.5rem, 100%);
 }
 
 .brand-lockup--md {
-	--brand-lockup-h: 2.125rem;
-	--brand-lockup-w: 13rem;
+	--brand-lockup-h: 2.625rem;
+	--brand-lockup-w: min(17rem, 100%);
 }
 
 .brand-lockup--lg {
-	--brand-lockup-h: 2.75rem;
-	--brand-lockup-w: 16rem;
+	--brand-lockup-h: clamp(2.85rem, 5vw, 3.85rem);
+	--brand-lockup-w: min(24rem, 100%);
 }
 
 .brand-lockup__img {
@@ -168,6 +178,7 @@ a:hover {
 	max-width: var(--brand-lockup-w);
 	object-fit: contain;
 	object-position: left center;
+	transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 /* Dark-theme artwork (default) */
@@ -198,16 +209,96 @@ a:hover {
 }
 
 .card .brand-lockup {
-	margin-bottom: var(--space-sm);
+	margin-bottom: var(--space-md);
+	padding: var(--space-sm) var(--space-md);
+	border-radius: var(--radius-md);
+}
+
+.card--fire .brand-lockup {
+	background: radial-gradient(
+		ellipse 130% 120% at 10% 0%,
+		color-mix(in srgb, var(--color-fire) 16%, transparent),
+		transparent 62%
+	);
+	box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-fire) 22%, transparent);
+}
+
+.card--fire .brand-lockup__img {
+	filter: drop-shadow(0 3px 18px color-mix(in srgb, var(--color-fire) 38%, transparent));
+}
+
+.card--rain .brand-lockup {
+	background: radial-gradient(
+		ellipse 130% 120% at 10% 0%,
+		color-mix(in srgb, var(--color-rain) 14%, transparent),
+		transparent 62%
+	);
+	box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-rain) 20%, transparent);
+}
+
+.card--rain .brand-lockup__img {
+	filter: drop-shadow(0 3px 18px color-mix(in srgb, var(--color-rain) 36%, transparent));
 }
 
 .section:not(.section--rich) > .wrap > .brand-lockup {
-	margin-bottom: var(--space-sm);
+	margin-bottom: var(--space-md);
+	padding: var(--space-sm) 0 var(--space-xs);
+	border-bottom: 2px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+}
+
+#git-fire.section:not(.section--rich) > .wrap > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-fire) 55%, var(--color-border));
+}
+
+#git-fire.section:not(.section--rich) > .wrap > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-fire) 32%, transparent));
+}
+
+#git-rain.section:not(.section--rich) > .wrap > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-rain) 55%, var(--color-border));
+}
+
+#git-rain.section:not(.section--rich) > .wrap > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-rain) 30%, transparent));
 }
 
 .feature-row__copy > .brand-lockup,
 .section--rich .rich-section__header > .brand-lockup {
-	margin-bottom: var(--space-md);
+	margin-bottom: var(--space-lg);
+	padding-bottom: var(--space-md);
+	border-bottom: 2px solid var(--color-border);
+}
+
+.feature-row--fire .feature-row__copy > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-fire) 50%, var(--color-border));
+}
+
+.feature-row--fire .feature-row__copy > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-fire) 34%, transparent));
+}
+
+.feature-row--rain .feature-row__copy > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-rain) 50%, var(--color-border));
+}
+
+.feature-row--rain .feature-row__copy > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-rain) 32%, transparent));
+}
+
+.section--rich#git-fire .rich-section__header > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-fire) 50%, var(--color-border));
+}
+
+.section--rich#git-fire .rich-section__header > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-fire) 34%, transparent));
+}
+
+.section--rich#git-rain .rich-section__header > .brand-lockup {
+	border-bottom-color: color-mix(in srgb, var(--color-rain) 50%, var(--color-border));
+}
+
+.section--rich#git-rain .rich-section__header > .brand-lockup .brand-lockup__img {
+	filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--color-rain) 32%, transparent));
 }
 
 .site-nav {
