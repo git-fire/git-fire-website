@@ -1,4 +1,7 @@
 ---
+/** Per-request hostname selects featured product — must not prerender to static HTML. */
+export const prerender = false;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LayoutCurrent from '../components/LayoutCurrent.astro';
 import LayoutA from '../components/LayoutA.astro';
@@ -6,12 +9,25 @@ import LayoutB from '../components/LayoutB.astro';
 import LayoutC from '../components/LayoutC.astro';
 
 const hostname = Astro.url.hostname;
+const hostLower = hostname.toLowerCase();
 const featuredParam = Astro.url.searchParams.get('featured');
 const layoutParam = Astro.url.searchParams.get('layout');
 
+/** Dev / preview only — hide on canonical and mirror marketing domains */
+const showProtoSwitcher =
+	import.meta.env.DEV ||
+	Astro.url.searchParams.get('proto') === '1' ||
+	hostLower === 'localhost' ||
+	hostLower.startsWith('127.') ||
+	hostLower.endsWith('.workers.dev') ||
+	hostLower.endsWith('.pages.dev');
+
+/** Hostname already selects rain; hide Domain row so the bar is not a second “tester” */
+const showProtoDomainGroup = showProtoSwitcher && !hostLower.includes('git-rain');
+
 const featured: 'fire' | 'rain' = featuredParam === 'rain' ? 'rain'
 	: featuredParam === 'fire' ? 'fire'
-	: hostname.includes('git-rain') ? 'rain'
+	: hostLower.includes('git-rain') ? 'rain'
 	: 'fire';
 
 const layout: 'current' | 'a' | 'b' | 'c' = layoutParam === 'a' ? 'a'
@@ -39,21 +55,27 @@ function protoUrl(f: string, l: string): string {
 	{layout === 'c' && <LayoutC featured={featured} />}
 	{layout === 'current' && <LayoutCurrent featured={featured} />}
 
-	<div class="proto-toggle" aria-label="Prototype switcher">
-		<div class="proto-toggle__group">
-			<span class="proto-toggle__label">Domain</span>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'fire' }]} href={protoUrl('fire', layout)}>fire.*</a>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'rain' }]} href={protoUrl('rain', layout)}>rain.*</a>
+	{showProtoSwitcher && (
+		<div class="proto-toggle" aria-label="Prototype switcher">
+			{showProtoDomainGroup && (
+				<>
+					<div class="proto-toggle__group">
+						<span class="proto-toggle__label">Domain</span>
+						<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'fire' }]} href={protoUrl('fire', layout)}>fire.*</a>
+						<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'rain' }]} href={protoUrl('rain', layout)}>rain.*</a>
+					</div>
+					<div class="proto-toggle__sep" aria-hidden="true"></div>
+				</>
+			)}
+			<div class="proto-toggle__group">
+				<span class="proto-toggle__label">Layout</span>
+				<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'current' }]} href={protoUrl(featured, 'current')}>now</a>
+				<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'a' }]} href={protoUrl(featured, 'a')}>A</a>
+				<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'b' }]} href={protoUrl(featured, 'b')}>B</a>
+				<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'c' }]} href={protoUrl(featured, 'c')}>C</a>
+			</div>
 		</div>
-		<div class="proto-toggle__sep"></div>
-		<div class="proto-toggle__group">
-			<span class="proto-toggle__label">Layout</span>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'current' }]} href={protoUrl(featured, 'current')}>now</a>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'a' }]} href={protoUrl(featured, 'a')}>A</a>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'b' }]} href={protoUrl(featured, 'b')}>B</a>
-			<a class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': layout === 'c' }]} href={protoUrl(featured, 'c')}>C</a>
-		</div>
-	</div>
+	)}
 
 	<script>
 		import { initInstallPickers } from '../scripts/install-pickers.ts';
