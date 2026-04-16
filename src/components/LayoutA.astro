@@ -4,6 +4,7 @@
  * Feature bullets live inside the hero cards; no separate fire/rain detail sections.
  * Card IDs serve as nav anchor targets.
  */
+import BrandLockup from './BrandLockup.astro';
 import InstallPicker from './InstallPicker.astro';
 interface Props { featured: 'fire' | 'rain'; }
 const { featured } = Astro.props;
@@ -23,6 +24,7 @@ const { featured } = Astro.props;
 			</p>
 			<div class="hero__grid">
 				<div class="card card--fire" id="git-fire" data-reveal data-reveal-delay="40">
+					<BrandLockup product="fire" size="md" />
 					<h2><a href="https://github.com/git-fire/git-fire">git-fire</a></h2>
 					<p>
 						Multi-repo checkpoint: discover, auto-commit optional, push backup branches with dry-run
@@ -39,6 +41,7 @@ const { featured } = Astro.props;
 					</div>
 				</div>
 				<div class="card card--rain" id="git-rain" data-reveal data-reveal-delay="90">
+					<BrandLockup product="rain" size="md" />
 					<h2><a href="https://github.com/git-fire/git-rain">git-rain</a></h2>
 					<p>
 						Reverse sync: fetch and fast-forward where safe, skip risky rewrites by default, optional

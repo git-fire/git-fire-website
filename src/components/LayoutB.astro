@@ -4,6 +4,7 @@
  * Slim hero, then each CLI gets a full-width two-column row:
  * left = name + description + bullets, right = install picker + CTA.
  */
+import BrandLockup from './BrandLockup.astro';
 import InstallPicker from './InstallPicker.astro';
 interface Props { featured: 'fire' | 'rain'; }
 const { featured } = Astro.props;
@@ -22,6 +23,7 @@ const { featured } = Astro.props;
 	<section class="feature-row feature-row--fire" id="git-fire" aria-labelledby="heading-fire">
 		<div class="wrap feature-row__inner">
 			<div class="feature-row__copy" data-reveal>
+				<BrandLockup product="fire" size="lg" />
 				<h2 id="heading-fire">git-fire</h2>
 				<p class="section__lead">
 					Emergency or everyday: one entrypoint for multi-repository checkpoints with dry-run, registry
@@ -45,6 +47,7 @@ const { featured } = Astro.props;
 	<section class="feature-row feature-row--rain" id="git-rain" aria-labelledby="heading-rain">
 		<div class="wrap feature-row__inner">
 			<div class="feature-row__copy" data-reveal>
+				<BrandLockup product="rain" size="lg" />
 				<h2 id="heading-rain">git-rain</h2>
 				<p class="section__lead">
 					Pulls the same mental model in the opposite direction: discover local repos, fetch from remotes,
