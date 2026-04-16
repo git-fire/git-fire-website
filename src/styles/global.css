@@ -817,7 +817,7 @@ a:hover {
 	.section--rich .wrap { grid-template-columns: 1fr; }
 }
 
-/* Prototype switcher — only rendered on dev/preview hosts (see index.astro); opt-in with ?proto=1 */
+/* Prototype switcher — only in DOM when ?proto=1 (see index.astro) */
 .proto-toggle {
 	position: fixed;
 	bottom: var(--space-lg);
