@@ -51,9 +51,9 @@
         stroke="#5AA8D0" stroke-width="1.5" stroke-linecap="round"/>
 
   <!-- ── COMMIT STEM + NODE ── -->
-  <line x1="30" y1="61.5" x2="30" y2="61.5"
-        stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
   <circle cx="30" cy="68" r="6.5" fill="#E0E0E0"/>
+  <line x1="30" y1="61.5" x2="30" y2="68"
+        stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
 
   <!-- ── WORDMARK ── -->
   <text
