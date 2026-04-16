@@ -690,8 +690,9 @@ a:hover {
 	.section--rich .wrap { grid-template-columns: 1fr; }
 }
 
-/* Prototype switcher */
+/* Prototype switcher — hidden in production; re-enable by removing display:none */
 .proto-toggle {
+	display: none;
 	position: fixed;
 	bottom: var(--space-lg);
 	left: 50%;
