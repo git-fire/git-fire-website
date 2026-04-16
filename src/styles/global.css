@@ -381,6 +381,19 @@ a:hover {
 	scroll-margin-top: 5.5rem;
 }
 
+/* Library sections — top stripe + tinted dividers (same tokens as .site-nav a[data-project]) */
+#testkit.section,
+#testkit.feature-row {
+	border-top: 3px solid var(--color-testkit);
+	border-bottom-color: color-mix(in srgb, var(--color-testkit) 45%, var(--color-border));
+}
+
+#harness.section,
+#harness.feature-row {
+	border-top: 3px solid var(--color-harness);
+	border-bottom-color: color-mix(in srgb, var(--color-harness) 45%, var(--color-border));
+}
+
 .js [data-reveal] {
 	opacity: 0;
 	transform: translateY(14px);
@@ -804,9 +817,8 @@ a:hover {
 	.section--rich .wrap { grid-template-columns: 1fr; }
 }
 
-/* Prototype switcher — hidden in production; re-enable by removing display:none */
+/* Prototype switcher — only in DOM when enabled server-side (see index.astro) */
 .proto-toggle {
-	display: none;
 	position: fixed;
 	bottom: var(--space-lg);
 	left: 50%;
