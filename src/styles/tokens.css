@@ -3,15 +3,22 @@
 		sans-serif;
 	--font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
 
+	/* Brand / project colors (same across themes) */
+	--color-fire: #f97316;
+	--color-fire-dim: #c2410c;
+	--color-rain: #38bdf8;
+	--color-rain-dim: #0284c7;
+	--color-testkit: #4ade80;
+	--color-testkit-dim: #16a34a;
+	--color-harness: #eab308;
+	--color-harness-dim: #a16207;
+
+	/* Dark theme (default) */
 	--color-bg: #0a0c10;
 	--color-surface: #12151c;
 	--color-border: #252a36;
 	--color-text: #e8eaef;
 	--color-muted: #8b93a7;
-	--color-fire: #f97316;
-	--color-fire-dim: #c2410c;
-	--color-rain: #38bdf8;
-	--color-rain-dim: #0284c7;
 	--color-link: #7dd3fc;
 	--color-link-hover: #bae6fd;
 
@@ -26,4 +33,43 @@
 	--radius-sm: 6px;
 	--radius-md: 10px;
 	--max-width: 68rem;
+}
+
+/* Light theme — explicit toggle or system preference */
+[data-theme='light'] {
+	--color-bg: #f8fafc;
+	--color-surface: #ffffff;
+	--color-border: #e2e8f0;
+	--color-text: #0f172a;
+	--color-muted: #64748b;
+	--color-link: #0369a1;
+	--color-link-hover: #0284c7;
+
+	/* Darken brand colors so they're readable on light backgrounds */
+	--color-rain: #0284c7;
+	--color-rain-dim: #0369a1;
+	--color-testkit: #16a34a;
+	--color-testkit-dim: #15803d;
+	--color-harness: #b45309;
+	--color-harness-dim: #92400e;
+}
+
+/* System-preference fallback (no stored pref / no JS) */
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme='dark']) {
+		--color-bg: #f8fafc;
+		--color-surface: #ffffff;
+		--color-border: #e2e8f0;
+		--color-text: #0f172a;
+		--color-muted: #64748b;
+		--color-link: #0369a1;
+		--color-link-hover: #0284c7;
+
+		--color-rain: #0284c7;
+		--color-rain-dim: #0369a1;
+		--color-testkit: #16a34a;
+		--color-testkit-dim: #15803d;
+		--color-harness: #b45309;
+		--color-harness-dim: #92400e;
+	}
 }

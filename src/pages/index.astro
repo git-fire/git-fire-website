@@ -1,11 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import InstallPicker from '../components/InstallPicker.astro';
+
+const hostname = Astro.url.hostname;
+const featuredParam = Astro.url.searchParams.get('featured');
+const featured: 'fire' | 'rain' = featuredParam === 'rain' ? 'rain'
+	: featuredParam === 'fire' ? 'fire'
+	: hostname.includes('git-rain') ? 'rain'
+	: 'fire';
+
+const title = featured === 'rain' ? 'git-rain' : 'git-fire';
+const description = featured === 'rain'
+	? 'git-rain syncs repos back down from remotes — companion to git-fire. Plus git-testkit and git-harness for serious Git automation.'
+	: 'Multi-repo checkpoint with git-fire, reverse sync with git-rain, plus git-testkit and git-harness for serious Git automation and tests.';
 ---
 
 <BaseLayout
-	title="git-fire"
-	description="Multi-repo checkpoint with git-fire, reverse sync with git-rain, plus git-testkit and git-harness for serious Git automation and tests."
+	title={title}
+	description={description}
+	featured={featured}
 >
 	<main id="main">
 		<section class="hero">
@@ -40,7 +53,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 						</p>
 						<InstallPicker product="git-rain" embedded />
 						<div class="cta-row">
-							<a class="btn btn--secondary" href="https://github.com/git-fire/git-rain">GitHub</a>
+							<a class="btn btn--rain" href="https://github.com/git-fire/git-rain">GitHub</a>
 						</div>
 					</div>
 				</div>
@@ -72,7 +85,7 @@ import InstallPicker from '../components/InstallPicker.astro';
 				</p>
 				<ul class="feature-list">
 					<li>Safe vs risky modes with explicit backup branches before destructive moves</li>
-					<li>Fetch-only mode for “just update my remotes” passes</li>
+					<li>Fetch-only mode for "just update my remotes" passes</li>
 					<li>Streaming TUI selector so you can start choosing repos before the scan finishes</li>
 				</ul>
 			</div>
@@ -108,6 +121,18 @@ import InstallPicker from '../components/InstallPicker.astro';
 		</section>
 
 	</main>
+
+	<div class="proto-toggle" aria-label="Prototype domain switcher">
+		<span class="proto-toggle__label">Simulate domain</span>
+		<a
+			class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'fire' }]}
+			href="?featured=fire"
+		>git-fire.*</a>
+		<a
+			class:list={['proto-toggle__btn', { 'proto-toggle__btn--active': featured === 'rain' }]}
+			href="?featured=rain"
+		>git-rain.*</a>
+	</div>
 
 	<script>
 		import { initInstallPickers } from '../scripts/install-pickers.ts';

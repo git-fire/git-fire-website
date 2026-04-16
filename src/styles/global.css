@@ -99,6 +99,12 @@ a:hover {
 	flex-wrap: wrap;
 }
 
+.site-header__right {
+	display: flex;
+	align-items: center;
+	gap: var(--space-md);
+}
+
 .site-logo {
 	font-weight: 700;
 	font-size: 1.125rem;
@@ -111,21 +117,137 @@ a:hover {
 	color: var(--color-fire);
 }
 
+[data-featured='rain'] .site-logo:hover {
+	color: var(--color-rain);
+}
+
 .site-nav {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-sm) var(--space-lg);
 }
 
+/* Mirror section order in navbar */
+.site-nav a[data-project='fire']   { order: 10; }
+.site-nav a[data-project='rain']   { order: 20; }
+.site-nav a[data-project='testkit']{ order: 30; }
+.site-nav a[data-project='harness']{ order: 40; }
+
+[data-featured='rain'] .site-nav a[data-project='rain']  { order: 10; }
+[data-featured='rain'] .site-nav a[data-project='fire']  { order: 20; }
+
 .site-nav a {
-	color: var(--color-muted);
+	color: color-mix(in srgb, var(--color-text) 80%, var(--color-muted));
 	text-decoration: none;
 	font-size: 0.9375rem;
+	transition: color 0.15s ease;
+	position: relative;
 }
 
-.site-nav a:hover {
-	color: var(--color-text);
+.site-nav a[aria-current='true']::after {
+	content: '';
+	position: absolute;
+	bottom: -3px;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: currentColor;
+	border-radius: 1px;
 }
+
+/* Per-project nav accent colors — muted at rest, full on hover/active */
+.site-nav a[data-project='fire'] {
+	color: color-mix(in srgb, var(--color-fire) 55%, var(--color-muted));
+}
+.site-nav a[data-project='fire']:hover,
+.site-nav a[data-project='fire'][aria-current='true'] {
+	color: var(--color-fire);
+}
+
+.site-nav a[data-project='rain'] {
+	color: color-mix(in srgb, var(--color-rain) 55%, var(--color-muted));
+}
+.site-nav a[data-project='rain']:hover,
+.site-nav a[data-project='rain'][aria-current='true'] {
+	color: var(--color-rain);
+}
+
+.site-nav a[data-project='testkit'] {
+	color: color-mix(in srgb, var(--color-testkit) 55%, var(--color-muted));
+}
+.site-nav a[data-project='testkit']:hover,
+.site-nav a[data-project='testkit'][aria-current='true'] {
+	color: var(--color-testkit);
+}
+
+.site-nav a[data-project='harness'] {
+	color: color-mix(in srgb, var(--color-harness) 55%, var(--color-muted));
+}
+.site-nav a[data-project='harness']:hover,
+.site-nav a[data-project='harness'][aria-current='true'] {
+	color: var(--color-harness);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.875rem;
+	height: 1.875rem;
+	background: none;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	color: var(--color-muted);
+	cursor: pointer;
+	transition: color 0.15s ease, border-color 0.15s ease;
+	flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+	color: var(--color-text);
+	border-color: color-mix(in srgb, var(--color-border) 40%, var(--color-text));
+}
+
+/* Dark mode: show sun (click to go light); hide moon */
+.theme-toggle__icon--moon {
+	display: none;
+}
+
+/* Light mode: show moon (click to go dark); hide sun */
+[data-theme='light'] .theme-toggle__icon--moon {
+	display: block;
+}
+[data-theme='light'] .theme-toggle__icon--sun {
+	display: none;
+}
+
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme='dark']) .theme-toggle__icon--moon {
+		display: block;
+	}
+	:root:not([data-theme='dark']) .theme-toggle__icon--sun {
+		display: none;
+	}
+}
+
+/* Domain-aware section ordering via CSS — avoids Astro fragment attribute-quoting bug */
+#main {
+	display: flex;
+	flex-direction: column;
+}
+
+.hero         { order: 0; }
+#git-fire     { order: 10; }
+#git-rain     { order: 20; }
+#testkit      { order: 30; }
+#harness      { order: 40; }
+
+[data-featured='rain'] #git-rain  { order: 10; }
+[data-featured='rain'] #git-fire  { order: 20; }
+
+/* Hero card reorder when rain is featured */
+[data-featured='rain'] .card--rain { order: -1; }
 
 .hero {
 	position: relative;
@@ -182,12 +304,12 @@ a:hover {
 	line-height: 1.15;
 	letter-spacing: -0.03em;
 	margin-bottom: var(--space-lg);
-	max-width: 20ch;
+	max-width: 28ch;
 }
 
 .hero__lead {
 	font-size: 1.125rem;
-	color: var(--color-muted);
+	color: color-mix(in srgb, var(--color-text) 85%, var(--color-muted));
 	max-width: 42rem;
 	margin-bottom: var(--space-xl);
 }
@@ -248,18 +370,18 @@ a:hover {
 }
 
 .card p {
-	color: var(--color-muted);
+	color: color-mix(in srgb, var(--color-text) 85%, var(--color-muted));
 	font-size: 0.9375rem;
 	margin-bottom: var(--space-md);
 }
 
 .section {
-	padding: var(--space-3xl) 0;
+	padding: var(--space-2xl) 0;
 	border-bottom: 1px solid var(--color-border);
 	scroll-margin-top: 5.5rem;
 }
 
-[data-reveal] {
+.js [data-reveal] {
 	opacity: 0;
 	transform: translateY(14px);
 	transition:
@@ -267,7 +389,7 @@ a:hover {
 		transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-[data-reveal].is-revealed {
+.js [data-reveal].is-revealed {
 	opacity: 1;
 	transform: none;
 }
@@ -279,7 +401,7 @@ a:hover {
 }
 
 .section__lead {
-	color: var(--color-muted);
+	color: color-mix(in srgb, var(--color-text) 85%, var(--color-muted));
 	max-width: 48rem;
 	margin-bottom: var(--space-xl);
 }
@@ -315,7 +437,7 @@ a:hover {
 	margin-top: var(--space-md);
 	margin-bottom: var(--space-md);
 	padding: var(--space-md);
-	background: var(--color-bg);
+	background: color-mix(in srgb, var(--color-surface) 40%, var(--color-bg));
 	border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-fire));
 }
 
@@ -331,6 +453,8 @@ a:hover {
 	font-size: 0.75rem;
 	margin-bottom: var(--space-sm);
 	padding: var(--space-sm) var(--space-md);
+	background: var(--color-bg);
+	border-color: color-mix(in srgb, var(--color-border) 70%, transparent);
 }
 
 .install-picker--embedded .install-picker__actions {
@@ -362,7 +486,7 @@ a:hover {
 	font-size: 0.9375rem;
 	color: var(--color-text);
 	background: var(--color-bg);
-	border: 1px solid var(--color-border);
+	border: 1px solid color-mix(in srgb, var(--color-border) 80%, var(--color-text));
 	border-radius: var(--radius-sm);
 	margin-bottom: var(--space-md);
 }
@@ -460,6 +584,18 @@ a:hover {
 	color: var(--color-rain);
 }
 
+/* Rain-primary: used when git-rain is the featured project */
+.btn--rain {
+	background: var(--color-rain);
+	color: #0a0a0a;
+	border-color: var(--color-rain-dim);
+}
+
+.btn--rain:hover {
+	opacity: 0.92;
+	color: #0a0a0a;
+}
+
 .feature-list {
 	list-style: none;
 	margin-top: var(--space-lg);
@@ -469,7 +605,7 @@ a:hover {
 	position: relative;
 	padding-left: var(--space-lg);
 	margin-bottom: var(--space-sm);
-	color: var(--color-muted);
+	color: color-mix(in srgb, var(--color-text) 90%, var(--color-muted));
 	font-size: 0.9375rem;
 }
 
@@ -486,4 +622,51 @@ a:hover {
 
 .section#git-rain .feature-list li::before {
 	background: var(--color-rain);
+}
+
+/* Prototype domain switcher */
+.proto-toggle {
+	position: fixed;
+	bottom: var(--space-lg);
+	left: 50%;
+	translate: -50% 0;
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	padding: var(--space-xs) var(--space-sm);
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	font-size: 0.75rem;
+	box-shadow: 0 4px 24px color-mix(in srgb, #000 40%, transparent);
+	z-index: 100;
+	white-space: nowrap;
+}
+
+.proto-toggle__label {
+	color: var(--color-muted);
+	padding: 0 var(--space-xs);
+}
+
+.proto-toggle__btn {
+	padding: var(--space-xs) var(--space-md);
+	border-radius: 999px;
+	text-decoration: none;
+	color: var(--color-muted);
+	transition: color 0.15s ease, background 0.15s ease;
+}
+
+.proto-toggle__btn:hover {
+	color: var(--color-text);
+}
+
+.proto-toggle__btn--active {
+	background: color-mix(in srgb, var(--color-fire) 15%, var(--color-surface));
+	color: var(--color-fire);
+	font-weight: 600;
+}
+
+[data-featured='rain'] .proto-toggle__btn--active {
+	background: color-mix(in srgb, var(--color-rain) 15%, var(--color-surface));
+	color: var(--color-rain);
 }
