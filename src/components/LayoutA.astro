@@ -1,0 +1,89 @@
+---
+/**
+ * Layout A — Merged cards
+ * Feature bullets live inside the hero cards; no separate fire/rain detail sections.
+ * Card IDs serve as nav anchor targets.
+ */
+import InstallPicker from './InstallPicker.astro';
+interface Props { featured: 'fire' | 'rain'; }
+const { featured } = Astro.props;
+---
+<main id="main">
+	<section class="hero">
+		<div class="wrap">
+			<p class="hero__eyebrow">git-fire org</p>
+			<h1>Checkpoint everything. Sync it back when you are ready.</h1>
+			<p class="hero__lead hero__lead--a">
+				One command to discover repos, optionally commit dirty work, and push safety rails across your
+				machine — then a companion CLI to pull it all back down with the same multi-repo discipline.
+			</p>
+			<p class="hero__lead hero__lead--b">
+				When you need a consistent move across many repositories, reach for git-fire. When you need
+				the reverse trip from remotes, git-rain keeps the same registry-aware, safety-first posture.
+			</p>
+			<div class="hero__grid">
+				<div class="card card--fire" id="git-fire" data-reveal data-reveal-delay="40">
+					<h2><a href="https://github.com/git-fire/git-fire">git-fire</a></h2>
+					<p>
+						Multi-repo checkpoint: discover, auto-commit optional, push backup branches with dry-run
+						and auditable logs. Beta — see GitHub for scope.
+					</p>
+					<ul class="feature-list">
+						<li>Streamed multi-repo execution with structured JSON logs</li>
+						<li>Registry-backed rediscovery — ignore paths you never want scanned</li>
+						<li>Plugins and execution modes documented in the upstream repo</li>
+					</ul>
+					<InstallPicker product="git-fire" embedded />
+					<div class="cta-row">
+						<a class="btn btn--primary" href="https://github.com/git-fire/git-fire">GitHub</a>
+					</div>
+				</div>
+				<div class="card card--rain" id="git-rain" data-reveal data-reveal-delay="90">
+					<h2><a href="https://github.com/git-fire/git-rain">git-rain</a></h2>
+					<p>
+						Reverse sync: fetch and fast-forward where safe, skip risky rewrites by default, optional
+						TUI selection. Companion to git-fire.
+					</p>
+					<ul class="feature-list">
+						<li>Safe vs risky modes with explicit backup branches before destructive moves</li>
+						<li>Fetch-only mode for "just update my remotes" passes</li>
+						<li>Streaming TUI selector so you can start choosing repos before the scan finishes</li>
+					</ul>
+					<InstallPicker product="git-rain" embedded />
+					<div class="cta-row">
+						<a class="btn btn--rain" href="https://github.com/git-fire/git-rain">GitHub</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="testkit" aria-labelledby="heading-testkit">
+		<div class="wrap" data-reveal>
+			<h2 id="heading-testkit">git-testkit</h2>
+			<p class="section__lead">
+				Go-first testing helpers for real Git repositories — fixtures, scenarios, snapshots — so CLIs
+				prove behaviour against actual git instead of brittle mocks. Java and Python interfaces are on
+				the roadmap per the upstream project.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn--primary" href="https://github.com/git-fire/git-testkit">Repository</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="harness" aria-labelledby="heading-harness">
+		<div class="wrap" data-reveal>
+			<h2 id="heading-harness">git-harness</h2>
+			<p class="section__lead">
+				Shared orchestration primitives extracted from git-fire: repository discovery helpers, git
+				invocation surfaces, and safety utilities (including secret-pattern awareness for logs). Both CLIs
+				pin versions from this library so push and pull flows do not drift.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn--primary" href="https://github.com/git-fire/git-harness">Repository</a>
+				<a class="btn btn--secondary" href="https://pkg.go.dev/github.com/git-fire/git-harness">pkg.go.dev</a>
+			</div>
+		</div>
+	</section>
+</main>

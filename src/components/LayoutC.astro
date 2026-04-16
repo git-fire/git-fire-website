@@ -1,0 +1,97 @@
+---
+/**
+ * Layout C — Minimal hero + rich self-contained sections
+ * No hero cards. Each project section owns its full story:
+ * big heading, description, features, and install picker all in one band.
+ */
+import InstallPicker from './InstallPicker.astro';
+interface Props { featured: 'fire' | 'rain'; }
+const { featured } = Astro.props;
+---
+<main id="main">
+	<section class="hero hero--minimal">
+		<div class="wrap">
+			<p class="hero__eyebrow">git-fire org</p>
+			<h1>Checkpoint everything.<br />Sync it back when you are ready.</h1>
+			<p class="hero__lead">
+				A suite of CLIs and libraries for serious multi-repository Git automation — push, pull, test, and orchestrate with the same safety-first discipline.
+			</p>
+		</div>
+	</section>
+
+	<section class="section section--rich" id="git-fire" aria-labelledby="heading-fire">
+		<div class="wrap" data-reveal>
+			<div class="rich-section__header">
+				<h2 id="heading-fire">git-fire</h2>
+				<p class="section__lead">
+					Emergency or everyday: one entrypoint for multi-repository checkpoints with dry-run, registry
+					repeatability, secret-aware logging, and a Bubble Tea TUI when you want to steer interactively.
+				</p>
+				<ul class="feature-list">
+					<li>Streamed multi-repo execution with structured JSON logs</li>
+					<li>Registry-backed rediscovery — ignore paths you never want scanned</li>
+					<li>Plugins and execution modes documented in the upstream repo</li>
+				</ul>
+			</div>
+			<div class="rich-section__install">
+				<InstallPicker product="git-fire" />
+				<div class="cta-row">
+					<a class="btn btn--primary" href="https://github.com/git-fire/git-fire">GitHub</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--rich" id="git-rain" aria-labelledby="heading-rain">
+		<div class="wrap" data-reveal>
+			<div class="rich-section__header">
+				<h2 id="heading-rain">git-rain</h2>
+				<p class="section__lead">
+					Pulls the same mental model in the opposite direction: discover local repos, fetch from remotes,
+					fast-forward branches where it is safe, and refuse to rewrite local-only commits unless you opt
+					into risky mode with backup refs first.
+				</p>
+				<ul class="feature-list">
+					<li>Safe vs risky modes with explicit backup branches before destructive moves</li>
+					<li>Fetch-only mode for "just update my remotes" passes</li>
+					<li>Streaming TUI selector so you can start choosing repos before the scan finishes</li>
+				</ul>
+			</div>
+			<div class="rich-section__install">
+				<InstallPicker product="git-rain" />
+				<div class="cta-row">
+					<a class="btn btn--rain" href="https://github.com/git-fire/git-rain">GitHub</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="testkit" aria-labelledby="heading-testkit">
+		<div class="wrap" data-reveal>
+			<h2 id="heading-testkit">git-testkit</h2>
+			<p class="section__lead">
+				Go-first testing helpers for real Git repositories — fixtures, scenarios, snapshots — so CLIs
+				prove behaviour against actual git instead of brittle mocks. Java and Python interfaces are on
+				the roadmap per the upstream project.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn--primary" href="https://github.com/git-fire/git-testkit">Repository</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="harness" aria-labelledby="heading-harness">
+		<div class="wrap" data-reveal>
+			<h2 id="heading-harness">git-harness</h2>
+			<p class="section__lead">
+				Shared orchestration primitives extracted from git-fire: repository discovery helpers, git
+				invocation surfaces, and safety utilities (including secret-pattern awareness for logs). Both CLIs
+				pin versions from this library so push and pull flows do not drift.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn--primary" href="https://github.com/git-fire/git-harness">Repository</a>
+				<a class="btn btn--secondary" href="https://pkg.go.dev/github.com/git-fire/git-harness">pkg.go.dev</a>
+			</div>
+		</div>
+	</section>
+</main>

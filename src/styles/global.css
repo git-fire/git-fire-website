@@ -624,7 +624,73 @@ a:hover {
 	background: var(--color-rain);
 }
 
-/* Prototype domain switcher */
+/* ─── Layout A: feature-list inside cards ─────────────────────────────── */
+.card--fire .feature-list li::before { background: var(--color-fire); }
+.card--rain .feature-list li::before { background: var(--color-rain); }
+
+/* ─── Layout B: feature rows ──────────────────────────────────────────── */
+.hero--slim {
+	padding: var(--space-2xl) 0;
+}
+
+.hero--slim h1 {
+	margin-bottom: var(--space-md);
+}
+
+.feature-row {
+	padding: var(--space-2xl) 0;
+	border-bottom: 1px solid var(--color-border);
+	scroll-margin-top: 5.5rem;
+}
+
+.feature-row--fire { border-top: 3px solid var(--color-fire); }
+.feature-row--rain { border-top: 3px solid var(--color-rain); }
+
+.feature-row__inner {
+	display: grid;
+	grid-template-columns: 3fr 2fr;
+	gap: var(--space-2xl);
+	align-items: start;
+}
+
+.feature-row__copy h2 {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	margin-bottom: var(--space-md);
+	letter-spacing: -0.02em;
+}
+
+.feature-row--fire .feature-list li::before { background: var(--color-fire); }
+.feature-row--rain .feature-list li::before { background: var(--color-rain); }
+
+@media (max-width: 640px) {
+	.feature-row__inner { grid-template-columns: 1fr; }
+}
+
+/* ─── Layout C: rich sections ─────────────────────────────────────────── */
+.hero--minimal {
+	padding: var(--space-2xl) 0 var(--space-lg);
+}
+
+.hero--minimal h1 {
+	margin-bottom: var(--space-md);
+}
+
+.section--rich .wrap {
+	display: grid;
+	grid-template-columns: 3fr 2fr;
+	gap: var(--space-2xl);
+	align-items: start;
+}
+
+.section--rich .rich-section__install {
+	padding-top: var(--space-sm);
+}
+
+@media (max-width: 640px) {
+	.section--rich .wrap { grid-template-columns: 1fr; }
+}
+
+/* Prototype switcher */
 .proto-toggle {
 	position: fixed;
 	bottom: var(--space-lg);
@@ -632,7 +698,7 @@ a:hover {
 	translate: -50% 0;
 	display: flex;
 	align-items: center;
-	gap: var(--space-sm);
+	gap: var(--space-xs);
 	padding: var(--space-xs) var(--space-sm);
 	background: var(--color-surface);
 	border: 1px solid var(--color-border);
@@ -643,9 +709,25 @@ a:hover {
 	white-space: nowrap;
 }
 
+.proto-toggle__group {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.proto-toggle__sep {
+	width: 1px;
+	height: 1rem;
+	background: var(--color-border);
+	margin: 0 var(--space-xs);
+}
+
 .proto-toggle__label {
 	color: var(--color-muted);
 	padding: 0 var(--space-xs);
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
 }
 
 .proto-toggle__btn {
