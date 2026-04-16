@@ -445,7 +445,7 @@ a:hover {
 	border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-rain));
 }
 
-.install-picker--embedded label {
+.install-picker--embedded .install-picker__label {
 	margin-bottom: var(--space-xs);
 }
 
@@ -470,25 +470,139 @@ a:hover {
 	font-size: 0.8125rem;
 }
 
-.install-picker label {
+.install-picker--embedded .install-picker__methods {
+	max-width: 100%;
+}
+
+.install-picker--embedded .install-picker__method-btn {
+	font-size: 0.6875rem;
+}
+
+.install-picker--embedded .install-picker__detect-hint {
+	font-size: 0.6875rem;
+	margin-bottom: var(--space-xs);
+}
+
+.install-picker__label {
 	display: block;
 	font-size: 0.8125rem;
 	font-weight: 600;
 	color: var(--color-muted);
+	margin: 0 0 var(--space-sm);
+}
+
+.install-picker__label--method {
+	margin-top: var(--space-xs);
+	margin-bottom: var(--space-xs);
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.install-picker__platforms {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
+	margin-bottom: var(--space-md);
+	max-width: 22rem;
+}
+
+.install-picker__platform-btn {
+	font: inherit;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	padding: var(--space-xs) var(--space-sm);
+	border-radius: var(--radius-sm);
+	border: 1px solid color-mix(in srgb, var(--color-border) 85%, var(--color-text));
+	background: var(--color-bg);
+	color: var(--color-muted);
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.install-picker__platform-btn:hover {
+	color: var(--color-text);
+	border-color: color-mix(in srgb, var(--color-border) 55%, var(--color-text));
+}
+
+.install-picker[data-product='git-fire'] .install-picker__platform-btn--active {
+	color: var(--color-fire);
+	border-color: color-mix(in srgb, var(--color-fire) 45%, var(--color-border));
+	background: color-mix(in srgb, var(--color-fire) 12%, var(--color-bg));
+}
+
+.install-picker[data-product='git-rain'] .install-picker__platform-btn--active {
+	color: var(--color-rain);
+	border-color: color-mix(in srgb, var(--color-rain) 45%, var(--color-border));
+	background: color-mix(in srgb, var(--color-rain) 12%, var(--color-bg));
+}
+
+.install-picker__method-area {
 	margin-bottom: var(--space-sm);
 }
 
-.install-picker select {
-	width: 100%;
-	max-width: 22rem;
-	padding: var(--space-sm) var(--space-md);
+.install-picker__method-area[hidden] {
+	display: none;
+}
+
+.install-picker__methods {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
+	margin-bottom: var(--space-sm);
+	max-width: 28rem;
+}
+
+.install-picker__method-btn {
 	font: inherit;
-	font-size: 0.9375rem;
-	color: var(--color-text);
-	background: var(--color-bg);
-	border: 1px solid color-mix(in srgb, var(--color-border) 80%, var(--color-text));
+	font-size: 0.75rem;
+	font-weight: 600;
+	padding: 0.2rem 0.45rem;
 	border-radius: var(--radius-sm);
-	margin-bottom: var(--space-md);
+	border: 1px dashed color-mix(in srgb, var(--color-border) 70%, var(--color-muted));
+	background: color-mix(in srgb, var(--color-bg) 92%, var(--color-surface));
+	color: var(--color-muted);
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease,
+		border-style 0.15s ease;
+}
+
+.install-picker__method-btn:hover {
+	color: var(--color-text);
+	border-color: color-mix(in srgb, var(--color-border) 50%, var(--color-text));
+	border-style: solid;
+}
+
+.install-picker[data-product='git-fire'] .install-picker__method-btn--active {
+	color: var(--color-fire);
+	border-style: solid;
+	border-color: color-mix(in srgb, var(--color-fire) 40%, var(--color-border));
+	background: color-mix(in srgb, var(--color-fire) 10%, var(--color-bg));
+}
+
+.install-picker[data-product='git-rain'] .install-picker__method-btn--active {
+	color: var(--color-rain);
+	border-style: solid;
+	border-color: color-mix(in srgb, var(--color-rain) 40%, var(--color-border));
+	background: color-mix(in srgb, var(--color-rain) 10%, var(--color-bg));
+}
+
+.install-picker__detect-hint {
+	font-size: 0.75rem;
+	line-height: 1.4;
+	color: var(--color-muted);
+	margin: 0 0 var(--space-sm);
+	max-width: 32rem;
+}
+
+.install-picker__detect-hint[hidden] {
+	display: none;
 }
 
 .install-picker pre {
@@ -513,7 +627,7 @@ a:hover {
 	margin-bottom: var(--space-md);
 }
 
-.install-picker button {
+.install-picker__actions button {
 	font: inherit;
 	font-size: 0.875rem;
 	font-weight: 600;
@@ -526,7 +640,7 @@ a:hover {
 	transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.install-picker button:hover {
+.install-picker__actions button:hover {
 	border-color: var(--color-rain-dim);
 	background: color-mix(in srgb, var(--color-rain) 12%, var(--color-surface));
 }
