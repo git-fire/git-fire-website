@@ -12,6 +12,7 @@ const hostname = Astro.url.hostname;
 const hostLower = hostname.toLowerCase();
 const featuredParam = Astro.url.searchParams.get('featured');
 const layoutParam = Astro.url.searchParams.get('layout');
+const keepProtoQuery = Astro.url.searchParams.get('proto') === '1';
 
 /** Dev / preview only — hide on canonical and mirror marketing domains */
 const showProtoSwitcher =
@@ -43,6 +44,7 @@ const description = featured === 'rain'
 
 function protoUrl(f: string, l: string): string {
 	const parts: string[] = [];
+	if (keepProtoQuery) parts.push('proto=1');
 	if (f !== 'fire') parts.push(`featured=${f}`);
 	if (l !== 'current') parts.push(`layout=${l}`);
 	return parts.length ? `?${parts.join('&')}` : '?';
