@@ -117,7 +117,7 @@ function orderedLinuxMethodIds(product: ProductId): string[] {
 	if (product === 'git-fire') {
 		return orderPool(fam, ['script', 'deb', 'rpm', 'brew'] as const);
 	}
-	return orderPool(fam, ['deb', 'rpm', 'brew', 'manual'] as const);
+	return orderPool(fam, ['script', 'deb', 'rpm', 'brew', 'manual'] as const);
 }
 
 function orderPool<T extends string>(fam: 'deb' | 'rpm' | 'unknown', neutralOrder: readonly T[]): T[] {
@@ -234,6 +234,14 @@ function rainLinuxBrew(): { command: string; note: string } {
 	};
 }
 
+function rainLinuxScript(): { command: string; note: string } {
+	return {
+		command:
+			'curl -fsSL https://raw.githubusercontent.com/git-fire/git-fire/main/scripts/install.sh | bash',
+		note: 'Remote code — inspect scripts/install.sh in the repo first when you have time. Prefer release assets + checksums for production rollouts.',
+	};
+}
+
 function rainLinuxDeb(): { command: string; note: string } {
 	return {
 		command: 'sudo dpkg -i ./git-rain_<version>_amd64.deb',
@@ -314,6 +322,8 @@ function resolveCommand(product: ProductId, os: OsFamily, methodId: string): { c
 			return rainLinuxBrew();
 		case 'manual':
 			return rainLinuxManual();
+		case 'script':
+			return rainLinuxScript();
 		case 'deb':
 		default:
 			return rainLinuxDeb();
