@@ -4,6 +4,7 @@
  * No hero cards. Each project section owns its full story:
  * big heading, description, features, and install picker all in one band.
  */
+import BrandLockup from './BrandLockup.astro';
 import InstallPicker from './InstallPicker.astro';
 interface Props { featured: 'fire' | 'rain'; }
 const { featured } = Astro.props;
@@ -22,6 +23,7 @@ const { featured } = Astro.props;
 	<section class="section section--rich" id="git-fire" aria-labelledby="heading-fire">
 		<div class="wrap" data-reveal>
 			<div class="rich-section__header">
+				<BrandLockup product="fire" size="lg" />
 				<h2 id="heading-fire">git-fire</h2>
 				<p class="section__lead">
 					Emergency or everyday: one entrypoint for multi-repository checkpoints with dry-run, registry
@@ -45,6 +47,7 @@ const { featured } = Astro.props;
 	<section class="section section--rich" id="git-rain" aria-labelledby="heading-rain">
 		<div class="wrap" data-reveal>
 			<div class="rich-section__header">
+				<BrandLockup product="rain" size="lg" />
 				<h2 id="heading-rain">git-rain</h2>
 				<p class="section__lead">
 					Pulls the same mental model in the opposite direction: discover local repos, fetch from remotes,
@@ -71,7 +74,7 @@ const { featured } = Astro.props;
 			<h2 id="heading-testkit">git-testkit</h2>
 			<p class="section__lead">
 				Go-first testing helpers for real Git repositories — fixtures, scenarios, snapshots — so CLIs
-				prove behaviour against actual git instead of brittle mocks. Java and Python interfaces are on
+				prove behavior against actual git instead of brittle mocks. Java and Python interfaces are on
 				the roadmap per the upstream project.
 			</p>
 			<div class="cta-row">

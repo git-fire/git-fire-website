@@ -1,0 +1,39 @@
+---
+/**
+ * Wordmark SVGs live in /public/assets — light and dark art swap with theme.
+ */
+interface Props {
+	product: 'fire' | 'rain';
+	size?: 'sm' | 'md' | 'lg';
+	decorative?: boolean;
+	class?: string;
+}
+
+const { product, size = 'md', decorative = true, class: className } = Astro.props;
+const slug = product === 'fire' ? 'git-fire' : 'git-rain';
+const label = decorative ? '' : product === 'fire' ? 'git-fire' : 'git-rain';
+---
+
+<span
+	class:list={['brand-lockup', `brand-lockup--${size}`, className]}
+	{...(decorative
+		? { 'aria-hidden': 'true' as const }
+		: ({ role: 'img', 'aria-label': label } as const))}
+>
+	<img
+		class="brand-lockup__img brand-lockup__img--light"
+		src={`/assets/${slug}-lockup.svg`}
+		alt=""
+		width="220"
+		height="80"
+		decoding="async"
+	/>
+	<img
+		class="brand-lockup__img brand-lockup__img--dark"
+		src={`/assets/${slug}-lockup-dark.svg`}
+		alt=""
+		width="220"
+		height="80"
+		decoding="async"
+	/>
+</span>

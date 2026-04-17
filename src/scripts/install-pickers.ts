@@ -273,8 +273,8 @@ function fireWindowsManual(): { command: string; note: string } {
 
 function rainWindowsWinget(): { command: string; note: string } {
 	return {
-		command: 'winget install git-rain.git-rain',
-		note: 'Windows Package Manager (winget).',
+		command: 'winget install git-rain',
+		note: 'Windows Package Manager (winget). If the short ID is not available yet: winget install git-rain.git-rain',
 	};
 }
 
