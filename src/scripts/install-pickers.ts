@@ -237,7 +237,7 @@ function rainLinuxBrew(): { command: string; note: string } {
 function rainLinuxScript(): { command: string; note: string } {
 	return {
 		command:
-			'curl -fsSL https://raw.githubusercontent.com/git-fire/git-fire/main/scripts/install.sh | bash',
+			'curl -fsSL https://raw.githubusercontent.com/git-fire/git-rain/refs/heads/main/scripts/install.sh | bash',
 		note: 'Remote code — inspect scripts/install.sh in the repo first when you have time. Prefer release assets + checksums for production rollouts.',
 	};
 }
