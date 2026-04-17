@@ -12,3 +12,6 @@ dist/
 
 # Windows alternate data stream metadata
 *Zone.Identifier
+
+# Brand SVGs live in public/assets only (avoid duplicating repo-root staging)
+/assets/
